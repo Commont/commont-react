@@ -4,10 +4,7 @@
   "description": "Effortlessly add a comment section to your website, and start the discussion on your content.",
   "version": "0.0.1",
   "license": "MIT",
-  "author": {
-    "name": "Aleksandra Sikora",
-    "url": "https://github.com/beerose"
-  },
+  "author": "Aleksandra Sikora (https://github.com/beerose)",
   "main": "dist/index.js",
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
@@ -38,7 +35,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Commont/commont-react"
+    "url": "git+https://github.com/Commont/commont-react.git"
   },
   "bugs": {
     "url": "https://github.com/Commont/commont-react/issues"
