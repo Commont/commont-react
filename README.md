@@ -1,6 +1,6 @@
 # @commont/react
 
-![npm](https://img.shields.io/npm/v/commont)
+![npm](https://img.shields.io/npm/v/@commont/react)
 
 ## Getting set up
 
