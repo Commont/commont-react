@@ -50,19 +50,18 @@ const _fetchComments = async (payload: FetchCommentsAPIPayload) => {
       'Content-Type': 'application/json',
     },
   });
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
   const responseJson: FetchCommentsAPIResponse = await response.json();
 
-  if (response.ok) {
+  if (response.ok && responseJson) {
     return responseJson;
   }
 
-  if (response.ok) {
-    return responseJson
-      ? responseJson
-      : Promise.reject(new Error('Empty API response'));
-  }
-
-  return Promise.reject(new Error(response.statusText));
+  throw new Error('Empty API response');
 };
 
 /** @internal */
@@ -91,15 +90,18 @@ const _addComment = async (payload: AddCommentAPIPayload) => {
       },
     }
   );
-  const responseJson: AddCommentAPIResponse = await response.json();
 
-  if (response.ok) {
-    return responseJson
-      ? responseJson
-      : Promise.reject(new Error('Empty API response'));
+  if (!response.ok) {
+    throw new Error(response.statusText);
   }
 
-  return Promise.reject(new Error(response.statusText));
+  const responseJson: AddCommentAPIResponse = await response.json();
+
+  if (response.ok && responseJson) {
+    return responseJson;
+  }
+
+  throw new Error('Empty API response');
 };
 
 export interface UseCommentsParameters {
