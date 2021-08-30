@@ -30,10 +30,14 @@ export interface FetchCommentsAPIPayload {
 }
 
 /** @internal */
-export interface FetchCommentsAPIResponse {
-  comments: UseCommentsComment[];
-  count: number;
-}
+export type FetchCommentsAPIResponse =
+  | {
+      comments: UseCommentsComment[];
+      count: number;
+    }
+  | {
+      error: string;
+    };
 
 const _fetchComments = async (payload: FetchCommentsAPIPayload) => {
   const params = new URLSearchParams({
@@ -51,17 +55,12 @@ const _fetchComments = async (payload: FetchCommentsAPIPayload) => {
     },
   });
 
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-
   const responseJson: FetchCommentsAPIResponse = await response.json();
-
-  if (response.ok && responseJson) {
-    return responseJson;
+  if ('error' in responseJson) {
+    throw new Error(responseJson.error);
   }
 
-  throw new Error('Empty API response');
+  return responseJson;
 };
 
 /** @internal */
@@ -73,11 +72,15 @@ export interface AddCommentAPIPayload {
 }
 
 /** @internal */
-export interface AddCommentAPIResponse {
-  comment: UseCommentsComment & {
-    hidden: boolean;
-  };
-}
+export type AddCommentAPIResponse =
+  | {
+      comment: UseCommentsComment & {
+        hidden: boolean;
+      };
+    }
+  | {
+      error: string;
+    };
 
 const _addComment = async (payload: AddCommentAPIPayload) => {
   const response = await fetch(
@@ -91,17 +94,12 @@ const _addComment = async (payload: AddCommentAPIPayload) => {
     }
   );
 
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-
   const responseJson: AddCommentAPIResponse = await response.json();
-
-  if (response.ok && responseJson) {
-    return responseJson;
+  if ('error' in responseJson) {
+    throw new Error(responseJson.error);
   }
 
-  throw new Error('Empty API response');
+  return responseJson.comment;
 };
 
 export interface UseCommentsParameters {
@@ -198,8 +196,7 @@ export const useComments = ({
       content,
       author,
     })
-      .then(res => {
-        const remoteComment = res.comment;
+      .then(remoteComment => {
         if (isMounted) {
           setComments(prev =>
             prev.map(x =>

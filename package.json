@@ -2,7 +2,7 @@
   "name": "@commont/react",
   "private": false,
   "description": "Effortlessly add a comment section to your website, and start the discussion on your content.",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "license": "MIT",
   "author": "Aleksandra Sikora (https://github.com/beerose)",
   "main": "dist/index.js",

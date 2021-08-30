@@ -35,6 +35,25 @@ describe(PostComments, () => {
     });
   });
 
+  it('shows error on invalid addComment data', async () => {
+    const { findByText, findByLabelText } = render(
+      <PostComments slug="" projectId="test-1" />
+    );
+    const nameInput = await findByLabelText('Name');
+    const textarea = await findByLabelText('Comment');
+    user.type(nameInput, 'Tester');
+    user.type(textarea, "What's up?");
+
+    await act(async () => {
+      const button = await findByText('Add comment');
+      user.click(button);
+    });
+
+    await waitFor(async () => {
+      await findByText('Error: Missing required parameters');
+    });
+  });
+
   it('filters comments by topic', async () => {
     const { findByText } = render(
       <PostComments slug="dogs" projectId="test-1" />
@@ -47,6 +66,7 @@ describe(PostComments, () => {
 
     await act(async () => {
       await findByText('0 comments');
+      await findByText('Error: Missing required parameters');
     });
   });
 
@@ -55,6 +75,7 @@ describe(PostComments, () => {
 
     await act(async () => {
       await findByText('0 comments');
+      await findByText('Error: Missing required parameters');
     });
   });
 
