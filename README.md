@@ -90,6 +90,7 @@ interface UseCommentsComment {
   content: string;
   createdAt: string;
   status?: UseCommentsStatus;
+  details?: Record<string, any>;
 }
 ```
 
@@ -131,7 +132,7 @@ interface UseComentsResult {
   addComment: ({
     content,
     author,
-  }: Pick<UseCommentsComment, 'content' | 'author'>) => void;
+  }: Pick<UseCommentsComment, 'content' | 'author' | 'details'>) => void;
   refetch: () => void;
   count: number;
   loading: boolean;

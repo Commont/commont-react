@@ -6,6 +6,7 @@ export interface UseCommentsComment {
   topic: string;
   createdAt: string;
   status?: UseCommentsStatus;
+  details?: Record<string, any>;
 }
 
 /**
@@ -69,6 +70,7 @@ export interface AddCommentAPIPayload {
   topic: string;
   content: string;
   author: string;
+  details?: Record<string, any>;
 }
 
 /** @internal */
@@ -114,7 +116,7 @@ export interface UseCommentsResult {
   addComment: ({
     content,
     author,
-  }: Pick<UseCommentsComment, 'content' | 'author'>) => void;
+  }: Pick<UseCommentsComment, 'content' | 'author' | 'details'>) => void;
   refetch: () => void;
   count: number;
   loading: boolean;
@@ -175,7 +177,8 @@ export const useComments = ({
   const addComment = ({
     content,
     author,
-  }: Pick<UseCommentsComment, 'content' | 'author'>) => {
+    details,
+  }: Pick<UseCommentsComment, 'content' | 'author' | 'details'>) => {
     const createdAt = new Date().toString();
 
     const newComment: UseCommentsComment = {
@@ -183,6 +186,7 @@ export const useComments = ({
       content,
       topic,
       createdAt,
+      details,
       status: 'sending',
     };
     if (isMounted) {

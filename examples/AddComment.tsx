@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { UseCommentsComment } from '../src/';
+import { UseCommentsResult } from '../src/';
 
 interface AddCommentProps {
-  onSubmit(values: Pick<UseCommentsComment, 'author' | 'content'>): void;
+  onSubmit: UseCommentsResult['addComment'];
 }
 export const AddComment = ({ onSubmit }: AddCommentProps) => {
   const [username, setUsername] = useState('');
@@ -12,7 +12,13 @@ export const AddComment = ({ onSubmit }: AddCommentProps) => {
     <form
       onSubmit={e => {
         e.preventDefault();
-        onSubmit({ content: comment, author: username });
+        onSubmit({
+          content: comment,
+          author: username,
+          details: {
+            key: 'value',
+          },
+        });
         setUsername('');
         setComment('');
       }}

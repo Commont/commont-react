@@ -100,4 +100,13 @@ describe(PostComments, () => {
     await findByText(/Tester/);
     await findByText('4 comments');
   });
+
+  it('displays the details', async () => {
+    const { findByText } = render(
+      <PostComments slug="dogs" projectId="test-1" />
+    );
+
+    await findByText(/Aleksandra/);
+    await findByText(/This is a test metadata/);
+  });
 });

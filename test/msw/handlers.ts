@@ -13,6 +13,9 @@ const comments: UseCommentsComment[] = [
     content: 'What a cute dog!',
     createdAt: new Date().toString(),
     topic: 'dogs',
+    details: {
+      key: 'This is a test metadata',
+    },
   },
   {
     author: 'Aleksandra',
@@ -70,7 +73,7 @@ export const handlers = [
   rest.post<AddCommentAPIPayload, AddCommentAPIResponse>(
     'https://www.commont.app/api/add-comment',
     (req, res, ctx) => {
-      const { author, content, topic } = req.body;
+      const { author, content, topic, details } = req.body;
 
       if (!author || !content) {
         return res(
@@ -84,6 +87,7 @@ export const handlers = [
         content,
         topic,
         createdAt: new Date().toString(),
+        details,
         hidden: false,
       };
 

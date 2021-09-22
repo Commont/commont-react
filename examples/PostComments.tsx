@@ -28,12 +28,13 @@ export const PostComments = ({
       {error && <p>Error: {error}</p>}
       {loading
         ? 'Loading comments...'
-        : comments.map(({ author, content, createdAt }, i) => (
+        : comments.map(({ author, content, createdAt, details }, i) => (
             <article key={i}>
               <div>
                 {author} ・ {new Date(createdAt).toLocaleDateString()}
               </div>
               <p>{content}</p>
+              <p>Details: {JSON.stringify(details)}</p>
             </article>
           ))}
     </section>
